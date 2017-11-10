@@ -43,15 +43,15 @@
                 @Html.DisplayFor(modelItem => item.Enddate)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Guest.Id)
+                @Html.DisplayFor(modelItem => item.Guest.FullName)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Room.Name)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+                <a asp-action="Delete" asp-route-id="@item.ID">Delete</a> |
+                <a asp-action="Details" asp-route-id="@item.ID">Details</a>
             </td>
         </tr>
 }

@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using HotelCase.Data;
 using HotelCase.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 
 namespace HotelCase.Controllers
 {
@@ -15,15 +16,23 @@ namespace HotelCase.Controllers
     public class ApplicationUsersController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public ApplicationUsersController(ApplicationDbContext context)
+        public ApplicationUsersController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: ApplicationUsers
         public async Task<IActionResult> Index()
         {
+            var user = _userManager.GetUserAsync(User).Result;
+            if (!User.IsInRole("Admin"))
+            {
+                return View(await _context.ApplicationUser.Where(u => u.Id == user.Id).ToListAsync());
+
+            }
             return View(await _context.ApplicationUser.ToListAsync());
         }
 

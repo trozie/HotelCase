@@ -1,9 +1,10 @@
-﻿<!DOCTYPE html>
+﻿@inject SignInManager<ApplicationUser> SignInManager
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Saint Nicolas Lake Resort</title>
+    <title>@ViewData["Title"] - Saint-Nicolas Lake Resort</title>
 
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
@@ -26,13 +27,22 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">Saint Nicolas Lake Resort</a>
+                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">Saint-Nicolas Lake Resort</a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="ApplicationUsers" asp-action="Index">Guests</a></li>
-                    <li><a asp-area="" asp-controller="Rooms" asp-action="Index">Rooms</a></li>
+                    
+                    <li><a asp-area="" asp-controller="ApplicationUsers" asp-action="Index">Guests</a></li>|
+                    <li><a asp-area="" asp-controller="Rooms" asp-action="Index">Rooms</a></li>|
                     <li><a asp-area="" asp-controller="Bookings" asp-action="Index">Bookings</a></li>
+                    @if (SignInManager.IsSignedIn(User))
+                    {
+                        if (User.IsInRole("Admin"))
+                        {
+                            @:|
+                            <li><a asp-area="" asp-controller="BookingsManaging" asp-action="Index">Admin Bookings</a></li>
+                        }
+                    }
                 </ul>
                 @await Html.PartialAsync("_LoginPartial")
             </div>
