@@ -12,9 +12,10 @@ using System;
 namespace HotelCase.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20171109131539_GuestBecameApplicationUser")]
+    partial class GuestBecameApplicationUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -84,34 +85,12 @@ namespace HotelCase.Data.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("HotelCase.Models.Booking", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Description");
-
-                    b.Property<DateTime>("Enddate");
-
-                    b.Property<string>("GuestID");
-
-                    b.Property<int>("RoomID");
-
-                    b.Property<DateTime>("Startdate");
-
-                    b.HasKey("ID");
-
-                    b.HasIndex("GuestID");
-
-                    b.HasIndex("RoomID");
-
-                    b.ToTable("Booking");
-                });
-
             modelBuilder.Entity("HotelCase.Models.Room", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Available");
 
                     b.Property<string>("Name");
 
@@ -230,18 +209,6 @@ namespace HotelCase.Data.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
-                });
-
-            modelBuilder.Entity("HotelCase.Models.Booking", b =>
-                {
-                    b.HasOne("HotelCase.Models.ApplicationUser", "Guest")
-                        .WithMany("Bookings")
-                        .HasForeignKey("GuestID");
-
-                    b.HasOne("HotelCase.Models.Room", "Room")
-                        .WithMany("Bookings")
-                        .HasForeignKey("RoomID")
-                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

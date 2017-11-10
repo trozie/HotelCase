@@ -12,9 +12,10 @@ using System;
 namespace HotelCase.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20171109124622_ChangedRoomType")]
+    partial class ChangedRoomType
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -28,23 +29,13 @@ namespace HotelCase.Data.Migrations
 
                     b.Property<int>("AccessFailedCount");
 
-                    b.Property<string>("Adress");
-
-                    b.Property<string>("City");
-
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
-
-                    b.Property<string>("Country");
 
                     b.Property<string>("Email")
                         .HasMaxLength(256);
 
                     b.Property<bool>("EmailConfirmed");
-
-                    b.Property<string>("FirstName");
-
-                    b.Property<string>("LastName");
 
                     b.Property<bool>("LockoutEnabled");
 
@@ -69,8 +60,6 @@ namespace HotelCase.Data.Migrations
                     b.Property<string>("UserName")
                         .HasMaxLength(256);
 
-                    b.Property<string>("Zipcode");
-
                     b.HasKey("Id");
 
                     b.HasIndex("NormalizedEmail")
@@ -84,34 +73,38 @@ namespace HotelCase.Data.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("HotelCase.Models.Booking", b =>
+            modelBuilder.Entity("HotelCase.Models.Guest", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Description");
+                    b.Property<string>("Adress");
 
-                    b.Property<DateTime>("Enddate");
+                    b.Property<string>("City");
 
-                    b.Property<string>("GuestID");
+                    b.Property<string>("Country");
 
-                    b.Property<int>("RoomID");
+                    b.Property<string>("EmailAdress");
 
-                    b.Property<DateTime>("Startdate");
+                    b.Property<string>("FirstName");
+
+                    b.Property<string>("LastName");
+
+                    b.Property<int>("PhoneNumber");
+
+                    b.Property<string>("Zipcode");
 
                     b.HasKey("ID");
 
-                    b.HasIndex("GuestID");
-
-                    b.HasIndex("RoomID");
-
-                    b.ToTable("Booking");
+                    b.ToTable("Guest");
                 });
 
             modelBuilder.Entity("HotelCase.Models.Room", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Available");
 
                     b.Property<string>("Name");
 
@@ -230,18 +223,6 @@ namespace HotelCase.Data.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
-                });
-
-            modelBuilder.Entity("HotelCase.Models.Booking", b =>
-                {
-                    b.HasOne("HotelCase.Models.ApplicationUser", "Guest")
-                        .WithMany("Bookings")
-                        .HasForeignKey("GuestID");
-
-                    b.HasOne("HotelCase.Models.Room", "Room")
-                        .WithMany("Bookings")
-                        .HasForeignKey("RoomID")
-                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
